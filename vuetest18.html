@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <!--  定义网速慢的插值表达式不展示在页面上 -->
+
+</head>
+<body>
+<div id="app">
+    <!--使用v-bind加字符串数组为元素绑定style样式-->
+    <h1 :style="[styleObject,styleObject2]">我是一个大大的h1，你看我多牛逼1</h1>
+
+
+    <!--使用对象为元素绑定style样式-->
+    <h1 :style="{'font-size':'60px', 'letter-spacing':'0.2em'}">我是一个大大的h1，你看我多牛逼1</h1>
+
+
+
+    <!--直接使用vm属性-->
+    <h1 :style="styleObject">我是一个大大的h1，你看我多牛逼1</h1>
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+
+
+-->
+
+
+<script>
+    var vm = new Vue({
+        el: "#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data: {
+            colorFlag:false,
+            styleObject:{'color':'red', 'font-weight':200},
+            styleObject2:{'font-size':'60px', 'letter-spacing':'0.2em'}
+        },
+        methods: {
+
+        },
+
+    })
+
+</script>
+
+</body>
+
+
+</html>

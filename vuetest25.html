@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--http访问库-->
+<script src="https://cdn.bootcss.com/vue-resource/1.3.5/vue-resource.min.js"></script>
+
+
+<!--
+
+    通过 vue-resource的jsonp方式来请求 node后台，实现 jsonp数据请求方式的小demo，  同名的.js文件为后台nodejs文件
+
+
+-->
+
+<!--view-->
+<div id="app">
+
+    <h2>{{result}}</h2>
+
+
+</div>
+
+<script>
+
+    // viewmodel
+    var app = new Vue({
+        el: "#app",
+        //  model
+        data: {
+            result: null
+        },
+        methods: {
+
+            showData(data) {
+                this.result=data
+            }
+
+        }
+    })
+
+</script>
+<script src="http://127.0.0.1:3000/api?call=showData&provider=app"></script>
+</body>
+</html>

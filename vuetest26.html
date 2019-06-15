@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue-resource/1.3.5/vue-resource.min.js"></script>
+
+<!--
+
+    汽车品牌增删改查小demo 数据库版本
+
+-->
+<!--view-->
+<div id="app">
+
+
+    <!--添加车品牌面板-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">添加品牌</h3>
+        </div>
+
+        <div class="panel-body form-inline">
+            <label>
+                Id:
+                <input type="text" class="form-control" v-model="newId">
+            </label>
+            <label>
+                Name:
+                <input type="text" class="form-control" v-model="newName">
+            </label>
+            <input type="button" value="添加" class="btn btn-primary">
+            <label>
+                请输入商标关键词:
+                <input type="text" class="form-control" v-model="keywords">
+            </label>
+        </div>
+
+
+    </div>
+
+    <table class="table table-bordered table-hover table-striped">
+
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Ctime</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="car in cars" :key="car.id">
+            <td>{{car.id}}</td>
+            <td v-text="car.name"></td>
+            <td v-text="car.ctime"></td>
+            <td><a href="#">删除</a></td>
+        </tr>
+        </tbody>
+
+
+    </table>
+</div>
+
+<script>
+
+    Vue.http.options.root = 'http://127.0.0.1:3000/'
+    Vue.http.options.amulateJSON = true
+
+    // viewmodel
+    var app = new Vue({
+        el: "#app",
+        //  model
+        data: {
+            newId: null,
+            newName: null,
+            keywords: '',
+            cars: [
+                {id: 1, name: '奔驰', ctime: new Date()},
+                {id: 2, name: '宝马', ctime: new Date()},
+                {id: 3, name: '五菱宏光', ctime: new Date()}
+            ]
+        },
+        methods: {
+
+            getprodlist() {
+                this.$http.get('api/getprodlist', {emulateJSON:true}).then(function (result) {
+                    // this.cars = result.body
+                    console.log(result)
+
+                })
+            }
+        },
+        created() {
+            this.getprodlist()
+        }
+    })
+
+</script>
+</body>
+</html>

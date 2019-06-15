@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+<!--
+
+    使用vue实例的render方法用自定义的模板替换掉  #app代表的那个div
+
+-->
+<!--view-->
+<div id="app">
+    <div><h3>hello</h3></div>
+</div>
+
+<script>
+
+
+
+    const login = {
+        template:'<h3>登录页面</h3>'
+    }
+
+
+    // viewmodel
+    const app = new Vue({
+        el: "#app",
+        //  model
+        data: {},
+
+        //通过render替换元素，
+        render(createEl){
+            return createEl(login)
+        }
+
+    })
+
+</script>
+</body>
+</html>

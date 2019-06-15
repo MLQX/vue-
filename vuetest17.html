@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <!--        定义网速慢的插值表达式不展示在页面上 -->
+    <style>
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .red{
+            color:red;
+        }
+
+        .thin{
+            font-weight:200
+        }
+        .active{
+            letter-spacing:0.2em;
+        }
+        .italic{
+            font-style:italic;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--使用v-bind加字符串数组为元素绑定class样式-->
+    <h1 :class="['red','thin','active','italic']">我是一个大大的h1，你看我多牛逼1</h1>
+
+
+
+    <!--使用对象为元素绑定class样式-->
+    <h1 :class="{red:true, thin:true, active:false, italic:false}">我是一个大大的h1，你看我多牛逼2</h1>
+
+
+    <!--使用对象+结合vm为元素绑定class样式-->
+    <h1 :class="classObject">我是一个大大的h1，你看我多牛逼3</h1>
+
+
+
+
+    <!--使用字符串数组加三元表达式-->
+    <h1 :class="['thin','active','italic',colorFlag?'red':'']">我是一个大大的h1，你看我多牛逼4</h1>
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+
+
+-->
+
+
+<script>
+    var vm = new Vue({
+        el: "#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data: {
+            colorFlag:false,
+            classObject:{red:true, thin:true, active:false, italic:false}
+        },
+        methods: {
+
+        },
+
+    })
+
+</script>
+
+</body>
+
+
+</html>

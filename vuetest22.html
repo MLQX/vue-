@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+    汽车品牌增删改查小demo
+
+-->
+
+<!--view-->
+<div id="app">
+
+
+    <!--添加车品牌面板-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">添加品牌</h3>
+        </div>
+
+        <div class="panel-body form-inline">
+            <label>
+                Id:
+                <input type="text" class="form-control" v-model="newId">
+            </label>
+            <label>
+                Name:
+                <input type="text" class="form-control" v-model="newName">
+            </label>
+            <input type="button" value="添加" class="btn btn-primary" @click="addBrand">
+            <label>
+                请输入商标关键词:
+                <input type="text" class="form-control" v-model="keywords">
+            </label>
+        </div>
+
+
+    </div>
+
+    <table class="table table-bordered table-hover table-striped">
+
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Ctime</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="car in search(keywords)" :key="car.id">
+                <td>{{car.id}}</td>
+                <td v-text="car.name"></td>
+                <td v-text="car.ctime"></td>
+                <td><a href="#" @click.prevent="delBrand(car.id)">删除</a></td>
+            </tr>
+        </tbody>
+
+
+    </table>
+</div>
+
+<script>
+
+    // viewmodel
+    var app = new Vue({
+        el: "#app",
+        //  model
+        data: {
+            newId:null,
+            newName:null,
+            keywords:'',
+            cars:[
+                {id:1,name:'奔驰',ctime:new Date().toLocaleString()},
+                {id:2,name:'宝马',ctime:new Date().toLocaleString()},
+                {id:3,name:'五菱宏光',ctime:new Date().toLocaleString()}
+            ]
+
+        },
+        methods:{
+            addBrand(){
+                if (this.newId!==null && this.newName!==null){
+                    //检测id冲突
+                    this.cars.push({id:this.newId,name:this.newName,ctime:new Date().toLocaleString()})
+                    this.newId=this.newName=''
+                }
+                return;
+            },
+            //传进来的是列表对象的id属性
+            delBrand(carId){
+                // this.cars.splice(carId-1,1)
+
+
+                //findIndex 方法 通过id属性是否相等来找到对应的数组对象，然后返回该对象在数组中的【索引】,这里的findIndex()方法用处很多
+                var index = this.cars.findIndex(item=>{
+                    if (item.id == carId) {
+                        return true;
+                    }
+                });
+                // console.log(index);
+                this.cars.splice(index,1)
+            },
+            search(keywords){
+                //通过过滤，过滤出符合条件的数组
+
+                //forEach, some, filter, findIndex等数组方法都会对数组中的每一项进行遍历，只是some能够中断遍历
+                //方法一
+                // const newArr = []
+                // this.cars.forEach(item=>{
+                //     if(item.name.indexOf(keywords)!=-1){
+                //         newArr.push(item)
+                //     }
+                // });
+                // return newArr;
+
+                //方法二 使用es6的filter方法
+                return this.cars.filter(item=>{
+                    // includes() 和  search()!=-1 均可判断
+                    if (item.name.includes(keywords)){
+                        return item;
+                    }
+                })
+
+
+
+
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

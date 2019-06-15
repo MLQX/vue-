@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+
+<!-- 实例：
+初始化： I cannot give you a answer until you ask a question
+当输入时 Waitting for you until you finish the question typing...
+暂停输入时， 提示 Questions usually contain a question mask.;-)
+输入 ？ 后 ，  查询api , thinking . ..  短暂延迟后弹出答案
+
+
+-->
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <div id="watch-example">
+        <p>Ask a yes/no question:<input v-model="question"></p>
+        <p>{{answer}}</p>
+    </div>
+
+
+    <script>
+        var watchExampleVM = new Vue({
+            el: "#watch-example",
+            data: {
+                question: "",
+                answer: "I cannot give you a answer until you ask a question"
+            },
+            watch: {
+                question: function (newValue, oldValue) {
+                    this.answer = 'Waitting for you until you finish the question typing...'
+                    this.debounceGetAnswer()
+                }
+            },
+            created: function () {
+                this.debounceGetAnswer = _.debounce(this.getAnswer, 500)
+            },
+            methods: {
+                getAnswer: function () {
+                    if (this.question.indexOf('?') === -1) {
+                        this.answer = "Questions usually contain a question mask.;-)"
+                        return;
+                    }
+                    this.answer = 'Thinking...'
+                    var vm = this;
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (response) {
+                            vm.answer = _.capitalize(response.data.answer)
+                        })
+                        .catch(function (err) {
+                            vm.answer = 'Error! Could not reach the API.' + err
+                        })
+                }
+            },
+        })
+    </script>
+
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--
+
+        自由切换组件小demo
+
+    -->
+
+    <!--view-->
+    <div id="app">
+        <a href="#" @click="compName='login'">登录页面</a>
+        <a href="#" @click="compName='register'">注册页面</a>
+        <hr>
+
+
+        <!--使用官方的component标签切换组件-->
+        <component :is="compName"></component>
+    </div>
+
+
+
+    <script>
+        Vue.component('login',{
+            template:'<h1>这是登录页面</h1>'
+        })
+        Vue.component('register',{
+            template:'<h1>这是注册页面</h1>'
+        })
+        // viewmodel
+        const app = new Vue({
+            el:"#app",
+            //  model
+            data:{
+                compName:'login'
+
+            }
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+<!--
+
+    前端的路由重定向功能
+
+-->
+<!--view-->
+<div id="app">
+    <!--router-link默认渲染成 a标签，也可以指定 tag属性，渲染成其他标签 -->
+    <router-link to="/login" tag="span">登录</router-link>
+    <router-link to="/register">注册</router-link>
+
+    <router-view></router-view>
+</div>
+
+<script>
+
+
+
+    const login = {
+        template:'<h3>登录页面</h3>'
+    }
+    const register = {
+        template:'<h3>注册页面</h3>'
+    }
+
+    const router = new VueRouter({
+        routes:[
+            {
+                path:'/',redirect:'/login'
+            },
+            {
+                path:'/login',component:login
+            },
+            {
+                path:'/register',component:register
+            }
+        ]
+    })
+
+    // viewmodel
+    const app = new Vue({
+        el: "#app",
+        //  model
+        data: {},
+        router:router
+    })
+
+</script>
+</body>
+</html>

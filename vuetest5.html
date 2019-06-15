@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div id="app">
+        <h1>{{a}}</h1>
+        <h2>{{b}}</h2>
+        <button v-on:click="changeBValue">改变b值</button>
+    </div>
+
+    <script>
+
+        var data = {a:1,b:2}
+        var vm = new Vue({
+            el:"#app",
+            data:data,
+            methods:{
+                changeBValue:function(){this.b=222;}
+            }
+
+
+
+        })
+
+        console.log(vm.$el)
+        console.log(vm.$data)
+        // 注意参数顺序
+        vm.$watch('b',(newValue,oldValue)=>{
+            console.log('b new value...'+newValue)
+            console.log('b old value...'+oldValue)
+        })
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--
+
+        组件子 -> 父 传值
+
+        使用$emit() 原意：触发
+    -->
+    <!--view-->
+    <div id="app">
+        <!--父组件将方法show通过事件绑定到func上,子组件通过$emit方法让父组件调用方法，
+        -->
+        <comp @func="show"></comp>
+    </div>
+
+    <script>
+
+        // viewmodel
+        const app = new Vue({
+            el:"#app",
+            //  model
+            data:{
+
+            },
+            methods:{
+                show(data){
+                    console.log('我是父组件中的方法----'+data);
+                }
+            },
+            components:{
+                comp:{
+                    template:'<div><h1>我是子组件</h1><input type="button" value="召唤神龙" @click="callFather"></div>',
+                    methods:{
+                        callFather(){
+                            this.$emit('func','我是子组件给的参数')
+                        }
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+<!--        定义网速慢的插值表达式不展示在页面上 -->
+    <style>
+
+        [v-cloak]{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <h2>{{msg}}</h2>
+    <h2 v-cloak>{{msg}}</h2>
+    <h3 v-text="msg"></h3>
+<!--    v-bind中可以是合法的js表达式-->
+    <input type="button" name="btn" value="按钮" :title="msg2 + 1111" v-on:click="alertsHello"/>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+ -->
+<script>
+    var vm = new Vue({
+        el:"#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data:{
+            msg:'Hello Vue',
+            msg2:'我的按钮标题d'
+        },
+        methods:{
+            alertsHello(){
+                alert("hello,my vue")
+            }
+        }
+    })
+
+</script>
+
+</body>
+
+
+
+
+
+
+</html>

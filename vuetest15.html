@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <!--        定义网速慢的插值表达式不展示在页面上 -->
+    <style>
+
+        [v-cloak] {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <!--    v-bind中可以是合法的js表达式-->
+    <div  @click="divClick" style="background:YELLOW;height:300px">
+        <input type="button" value="点我" name="btn" title="戳我" @click.stop="btnClick">
+    </div>
+
+
+    <a href="http://www.baidu.com"  @click.prevent="">百度一下</a>
+     <!-- -->
+     <div @click.capture="divClick" style="background:YELLOW;height:300px">
+        <input type="button" value="点我" name="btn" title="戳我" @click="btnClick">
+    </div>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+        事件触发机制
+        @click.prevent="" 用于阻止默认行为,
+        @click.stop用于内层DOM,用于禁止向外层冒泡事件
+        @click.capture 用于从外到内捕获事件，与冒泡事件正好相反
+        @click.self  主动触发有效， 被动冒泡或捕获则无效
+        @click.once 事件只触发一次
+ -->
+<script>
+    var vm = new Vue({
+        el: "#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data: {
+
+        },
+        methods: {
+            btnClick(){
+                console.log(`这是戳发了【按钮】`)
+            },
+            divClick(){
+                console.log(`这是戳发了按钮外部的【容器】`)
+            },
+            preventDeft(){
+                console.log(`阻止默认跳转行为`)
+            }
+        },
+
+    })
+
+</script>
+
+</body>
+
+
+</html>

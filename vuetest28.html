@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--
+
+        组件知识
+        创建基础component方式1
+
+    -->
+    <!--view-->
+    <div id="app">
+        <!--如果组件名称为驼峰命名，则在页面中引用需要加 '-' 连接 -->
+        <my-comp1></my-comp1>
+    </div>
+
+    <script>
+        //创建组件
+        const comp1 = Vue.extend({
+            template:'<h3>这是我用Vue.extend创建的组件</h3>'
+        })
+        // console.log(comp1)
+
+
+        //注册组件到myComp1,可以在页面上引用
+        Vue.component('myComp1',comp1);
+
+        // viewmodel
+        var app = new Vue({
+            el:"#app",
+            //  model
+            data:{
+
+            }
+        })
+
+    </script>
+</body>
+</html>

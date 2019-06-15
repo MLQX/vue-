@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <style>
+        input {
+            width: 95px;
+            height: 30px;
+            background-color:cadetblue;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+
+    <input type="button" value="切换显示效果" @click="flag=!flag">
+    <h3 v-if="flag">我是h3</h3>
+    <h3 v-show="flag">我是h3</h3>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+    v-if和v-show区别：
+    v-if 渲染切换成本高
+    v-show 初始渲染成本高
+
+    因为 v-if 为false ,它会移除元素，为true时，重新创建元素
+        v-show若初始时不可见，也会添加元素，只是在添加元素时，加上一个style为display：none,所以它的初始渲染成本高
+
+-->
+
+
+<script>
+    var vm = new Vue({
+        el: "#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data: {
+            flag:false
+        },
+        methods: {
+
+        },
+
+    })
+
+</script>
+
+</body>
+
+
+</html>

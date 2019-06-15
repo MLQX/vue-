@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+    过滤器 适合 插值表达式 和 v-bind
+    为了练习时间过滤器， 本例与上一例的区别是时间对象没有采用toLocaleString()来格式化的方式
+    全局过滤器和私有过滤器
+    过滤器同民采用就近原则， 优先调用私有过滤器
+
+    ---------
+
+    添加键盘监听
+
+
+
+
+-->
+
+<!--view-->
+<div id="app">
+
+
+    <!--添加车品牌面板-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">添加品牌</h3>
+        </div>
+
+        <div class="panel-body form-inline">
+            <label>
+                Id:
+                <input type="text" class="form-control" v-model="newId">
+            </label>
+            <label>
+                Name:
+                <input type="text" class="form-control" v-model="newName" @keyup.enter="addBrand" @keyup.f2="addBrand">
+            </label>
+            <input type="button" value="添加" class="btn btn-primary" @click="addBrand">
+            <label>
+                请输入商标关键词:
+                <input type="text" class="form-control" v-model="keywords">
+            </label>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Ctime</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="car in search(keywords)" :key="car.id">
+            <td>{{car.id}}</td>
+            <td v-text="car.name"></td>
+            <!--下面表达方式，前面用了全局过滤器，后面用了私有过滤器-->
+            <td>{{car.ctime | timeFormat('yyyy/mm/dd')}} || {{car.ctime | timeFormat2('yyyy/mm/dd')}}</td>
+            <td><a href="#" @click.prevent="delBrand(car.id)">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    //时间格式【全局过滤器】
+    Vue.filter('timeFormat', function (timeStr, pattern = '') {
+        const timeObj = new Date(timeStr);
+        let year = timeObj.getFullYear()
+        let month = (timeObj.getMonth() + 1).toString().padStart(2,'0');
+        let day = timeObj.getDate().toString().padStart(2,'0');
+        if (pattern.toLowerCase() == 'yyyy-mm-dd') {
+            return `${year}-${month}-${day}`
+        } else {
+            let hour = timeObj.getHours().toString().padStart(2,'0');
+            let minute = timeObj.getMinutes().toString().padStart(2,'0');
+            let second = timeObj.getSeconds().toString().padStart(2,'0');
+            return `${year}-${month}-${day} ${hour}时${minute}分${second}秒`
+        }
+    })
+
+
+    //自定义键盘码 的alias
+    Vue.config.keyCodes.f2 = 113   // 查表知f2对应的键盘码值为113
+
+
+    // viewmodel
+    var app = new Vue({
+        el: "#app",
+        //  model
+        data: {
+            newId: null,
+            newName: null,
+            keywords: '',
+            cars: [
+                {id: 1, name: '奔驰', ctime: new Date()},
+                {id: 2, name: '宝马', ctime: new Date()},
+                {id: 3, name: '五菱宏光', ctime: new Date()}
+            ]
+
+        },
+        methods: {
+            addBrand() {
+                if (this.newId !== null && this.newName !== null) {
+                    //检测id冲突
+                    this.cars.push({id: this.newId, name: this.newName, ctime: new Date()})
+                    this.newId = this.newName = ''
+                }
+                return;
+            },
+            //传进来的是列表对象的id属性
+            delBrand(carId) {
+                // this.cars.splice(carId-1,1)
+
+
+                //findIndex 方法 通过id属性是否相等来找到对应的数组对象，然后返回该对象在数组中的【索引】,这里的findIndex()方法用处很多
+                var index = this.cars.findIndex(item => {
+                    if (item.id == carId) {
+                        return true;
+                    }
+                });
+                // console.log(index);
+                this.cars.splice(index, 1)
+            },
+            search(keywords) {
+                //通过过滤，过滤出符合条件的数组
+
+                //forEach, some, filter, findIndex等数组方法都会对数组中的每一项进行遍历，只是some能够中断遍历
+                //方法一
+                // const newArr = []
+                // this.cars.forEach(item=>{
+                //     if(item.name.indexOf(keywords)!=-1){
+                //         newArr.push(item)
+                //     }
+                // });
+                // return newArr;
+
+                //方法二 使用es6的filter方法
+                return this.cars.filter(item => {
+                    // includes() 和  search()!=-1 均可判断
+                    if (item.name.includes(keywords)) {
+                        return item;
+                    }
+                })
+
+
+            }
+        },
+        //时间格式【私有过滤器】
+        filters: {
+            timeFormat2: function (timeStr, pattern = '') {
+                const timeObj = new Date(timeStr);
+                let year = timeObj.getFullYear()
+                // padStart()和padEnd() 用于保证数位， 下例中不够的位数用'0'填充（从头部）， 以防止数据呈现的长短不一致影响页面视觉
+                let month = (timeObj.getMonth() + 1).toString().padStart(2,'0');
+                let day = timeObj.getDate().toString().toString().padStart(2,'0');
+                if (pattern.toLowerCase() == 'yyyy-mm-dd') {
+                    return `${year}-${month}-${day}`
+                } else {
+                    let hour = timeObj.getHours().toString().padStart(2,'0');
+                    let minute = timeObj.getMinutes().toString().padStart(2,'0');
+                    let second = timeObj.getSeconds().toString().padStart(2,'0');
+                    return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+                }
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

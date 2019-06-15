@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--
+
+    结合组件的 评论 小demo
+
+-->
+<!--view-->
+<div id="app">
+    <comm @render="iterStorage"></comm>
+
+    <!--<ul>-->
+    <!--    <display  v-for="item in iterStorage()" :item="item" :key="item.id"></display>-->
+    <!--</ul>-->
+    <ul>
+        <li v-for="item in list" :key="item.id">{{item.user}}------{{item.content}}</li>
+    </ul>
+
+
+</div>
+
+
+<template id="comment">
+    <div>
+        <label>
+            评论人：
+            <input type="text" v-model="user"/>
+        </label>
+        <br>
+        <label>
+            评论内容：
+            <input type="text" v-model="content"/>
+        </label>
+        <br>
+        <input type="button" value="发表" @click="express">
+    </div>
+</template>
+
+
+<!--<template id="dis">-->
+<!--    <li>{{item.user}}&#45;&#45;&#45;&#45;&#45;&#45;{{item.content}}</li>-->
+<!--</template>-->
+
+<script>
+
+    // viewmodel
+    const app = new Vue({
+
+        el: "#app",
+        //  model
+        data: {
+            list:[
+                {user:'张飞',content:'牛逼'}
+
+            ]
+        },
+        created() {
+            //展示列表
+            this.iterStorage();
+        },
+        methods: {
+            // showList(storage){
+            //
+            //
+            //     console.log(storage)
+            //
+            // },
+            iterStorage(){
+                const val = localStorage.getItem('cmts') || '[]'
+                this.list = JSON.parse(val)
+            }
+        },
+
+        components: {
+            comm: {
+                data() {
+                    return {
+                        user: '',
+                        content: ''
+                    }
+                },
+                template: '#comment',
+                methods:{
+                    express(){
+                        //组织数据
+                        const data = {
+                            id: Date.now(),
+                            user: this.user,
+                            content: this.content
+                        };
+                        //将数据存储到localStorage中
+                        //取出数据，这里要防止取不到影响后面操作的情况
+                        const val = JSON.parse(localStorage.getItem('cmts') || '[]')
+                        //往数组中存入数据
+                        val.unshift(data);
+                        //将数组再次字符串化
+                        localStorage.setItem('cmts', JSON.stringify(val));
+                        this.$emit('render');
+                        this.user = this.content = '';
+
+                    },
+
+                }
+
+            },
+
+        }
+    })
+
+</script>
+</body>
+</html>

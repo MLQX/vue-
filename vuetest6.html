@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+
+
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <div id="app">
+        <a href="http://www.baidu.com">baidu!</a>
+        <!-- 这里绑定的属性值推荐小写，因为大写也会给转成小写 -->
+        <a v-bind:[attributename]='url'>到百度</a>
+    </div>
+
+    <script>
+            var vmA = new Vue({
+                el: "#app",
+                data: {
+                    attributename: 'href',
+                    url: 'http://www.baidu.com'
+                }
+            })
+        </script>
+
+</body>
+
+
+
+
+
+</html>

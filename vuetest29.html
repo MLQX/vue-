@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--
+
+        组件知识
+        创建基础component方式2
+
+    -->
+    <!--view-->
+    <div id="app">
+        <my-comp1></my-comp1>
+    </div>
+
+    <script>
+
+        //这里注意，template应该是一个根元素，不能类似  <h3></h3><span></span> 但是可以 <h3><span></span></h3>，此时的h3为template根元素
+        Vue.component('myComp1',{
+            template:'<h3>这是我用Vue.extend创建的组件</h3>'
+        });
+
+        // viewmodel
+        var app = new Vue({
+            el:"#app",
+            //  model
+            data:{
+
+            }
+        })
+
+    </script>
+</body>
+</html>

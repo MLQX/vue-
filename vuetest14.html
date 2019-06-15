@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <!--        定义网速慢的插值表达式不展示在页面上 -->
+    <style>
+
+        [v-cloak] {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+
+    <!--    v-bind中可以是合法的js表达式-->
+    <input type="button" name="btn" value="浪起来" @click="lang"/>
+    <input type="button" name="btn2" value="猥琐" @click="quiet"/>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+        跑马灯效果 ， 注意防止定时器重复激发问题
+ -->
+<script>
+    var vm = new Vue({
+        el: "#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data: {
+            msg: '猥琐发育，别浪~~！',
+            msg_copy: '猥琐发育，别浪~~！',
+            intervalId:null,  //保存定时器id
+        },
+        methods: {
+            lang() {
+                // const _this = this;
+                if (this.intervalId != null) return;   //防止开启多个定时器
+                this.intervalId = window.setInterval(()=>{
+                    const start = this.msg.substring(0, 1)
+                    const end = this.msg.substring(1)
+                    console.log(`start和end值为${start},${end}`)
+                    this.msg = end + start
+                },1000)
+            },
+            quiet() {
+                clearInterval(this.intervalId)
+                this.intervalId = null;             //定时器停止后可以正常开启
+                // this.msg = this.msg_copy;
+            }
+        }
+    })
+
+</script>
+
+</body>
+
+
+</html>

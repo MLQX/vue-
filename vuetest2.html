@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <!-- 迭代列表元素  v-for, 注意vue对象如何赋值的 -->
+    <div id="app4">
+        <ol>
+            <li v-for="todo in todos">
+
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+
+    <!-- 处理事件 -->
+
+    <div id="app5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMsg">逆转消息</button>
+    </div>
+
+
+    <!-- 表单内容和页面元素双向绑定  -->
+    <div id="app6">
+        <p>{{message}}</p>
+        <input v-model="message">
+    </div>
+
+    <script>
+        var app4 = new Vue({
+            el:"#app4",
+            data:{
+                todos:[
+                    {text:"学习javascript"},
+                    {text:"学习Python"},
+                    {text:"学习java"}
+                ]
+            }
+        })
+        // app4.todos.push({text:"dddd"})
+
+
+        var app5 = new Vue({
+            el:"#app5",
+            data:{
+                message:"2019"
+            },
+            methods:{
+                reverseMsg:function(){
+                    this.message = this.message.split("").reverse().join("")
+                }
+            }
+        })
+
+
+        var app6 = new Vue({
+            el:"#app6",
+            data:{
+                message:"Hello Vue!!!!!!"
+            }
+        })
+    </script>
+
+
+
+
+</body>
+</html>

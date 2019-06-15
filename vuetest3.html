@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+
+    <script>
+        Vue.component('todo-item',{
+            props:['todo'],
+            template:'<li>{{todo.text}}</li>'
+        })
+
+        Vue.component('my-comp', {
+                props:['liindex'],
+                template:'<li>{{liindex.name}}{{liindex.age}}{{liindex.sex}}</li>'
+            }
+        )
+    </script>
+    <div id="app7">
+        <ol>
+            <!-- <li>dd</li> -->
+            <todo-item v-for="item in groceryList" :todo="item" :key="item.id">
+
+            </todo-item>
+        </ol>
+    </div>
+
+    <div id="app8">
+        <ol>
+            <li>清单头</li>
+            <my-comp v-for="li in lists" v-bind:liindex="li" v-bind:key="li.id"></my-comp>
+        </ol>
+    </div>
+
+
+
+
+    <script>
+        var app7 = new Vue({
+            el:"#app7",
+            data:{
+                groceryList:[
+                    {id:0, text:'蔬菜'},
+                    {id:1, text:'水果'},
+                    {id:2, text:'卤味'}
+                ]
+
+
+            }
+        })
+
+        var app8 = new Vue({
+            el:"#app8",
+            data:{
+                lists:[
+                    {name:'张三',age:18,sex:'男',id:0},
+                    {name:'李艳',age:24,sex:'女',id:1},
+                    {name:'刘兴',age:12,sex:'男',id:2}
+
+                ]
+            }
+        })
+    </script>
+
+
+    <!-- 总结：通过组件来创建标签，如果要动态的传入数据，那么对象需要有一个 props属性，该属性数组
+        内的字符串项，就是需要传进来的数据，对此例子来说，是每一个li项的索引，通过实例化的app8，可以在模板内访问到
+    每个li项的name,age,sex的值并打印 -->
+
+
+</body>
+</html>

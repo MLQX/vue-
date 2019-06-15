@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <!--        定义网速慢的插值表达式不展示在页面上 -->
+
+</head>
+<body>
+<div id="app">
+
+
+<!--
+
+在使用v-for的时候，需要联合v-bind:key来使用，维持model和view的遍历数据的一致关系
+
+-->
+
+
+
+    <h1 v-for="(item,i) in objArr1" :key="item.id" >姓名为：{{item.name}}------索引为：{{i}}</h1>
+    <hr>
+
+
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+
+
+-->
+
+
+<script>
+    var vm = new Vue({
+        el: "#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data: {
+            objArr1:[
+                {id:1,name:"张三",age:18},
+                {id:2,name:"李四",age:21},
+                {id:3,name:"王五",age:86}
+            ],
+        },
+        methods: {
+
+        },
+
+    })
+
+</script>
+
+</body>
+
+
+</html>

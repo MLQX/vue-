@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue demo</title>
+
+    <style>
+        *{
+            margin:0;
+            pading:0;
+        }
+        .header {
+            height:120px;
+            background-color: deeppink;
+        }
+
+        .container{
+            /*在container内实现左右布局*/
+            display:flex;
+            height:840px;
+        }
+        .left{
+            /*flex定义占百分比大小*/
+            flex:2;
+            background-color: greenyellow;
+        }
+        .main{
+            flex:8;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+<!--
+
+    路由命名实现经典页面布局demo
+
+    经典布局如下：
+
+    h e a d e r部 分
+
+    left部分 main部分
+
+-->
+<!--view-->
+<div id="app">
+    <router-view></router-view>
+    <div class="container">
+        <router-view name="left"></router-view>
+        <router-view name="main"></router-view>
+    </div>
+</div>
+
+<script>
+
+
+    const header = {
+
+        template: '<div class="header">header部分</div>'
+    }
+    const leftBox = {
+        template: '<div class="left">left部分</div>'
+    }
+    const mainBox = {
+        template: '<div class="main">main部分</div>'
+    }
+
+    const router = new VueRouter({
+        routes: [
+            {
+                path: '/', components: {
+                    default: header,
+                    left: leftBox,
+                    main: mainBox
+
+                }
+            }
+        ]
+    })
+
+    // viewmodel
+    const app = new Vue({
+        el: "#app",
+        //  model
+        data: {},
+        router: router
+    })
+
+</script>
+</body>
+</html>

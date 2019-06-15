@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+    组件知识
+    组件中的data和Vue实例中的data的比较:
+    1.组件也可以有自己的data
+    2.组件的data只能是function,而Vue实例的data是object
+    3.组件的data返回值必须为object
+    4.组件的data域和Vue实例的data域用法相同
+
+-->
+<!--view-->
+<div id="app">
+    <mycomp1></mycomp1>
+</div>
+
+
+<!--创建自定义template，可以有高亮和智能提示-->
+<template id="mytemp">
+    <div>
+        <h1>这种方法有智能提示</h1>
+        <h4>真的好棒啊，写起来不容易错了{{msg}}</h4>
+    </div>
+</template>
+
+<script>
+
+
+    // viewmodel
+    const app = new Vue({
+        el: "#app",
+        //  model
+        data: {},
+        components: {
+            mycomp1: {
+                template: '#mytemp',
+                data() {
+                    return {
+                        msg: 'VVV'
+                    }
+                }
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+<!--
+
+    前端的路由嵌套
+
+-->
+<!--view-->
+<div id="app">
+
+    <router-link to="/account">账户操作</router-link>
+    <router-view></router-view>
+</div>
+<template id="acc">
+    <div>
+        <router-link to="/account/login">登录</router-link>
+
+        <router-link to="/account/register">注册</router-link>
+        <router-view></router-view>
+    </div>
+</template>
+<script>
+
+
+    const login = {
+        template: '<h3>登录页面</h3>',
+    }
+
+
+    const register = {
+        template: '<h3>注册页面</h3>',
+    }
+
+
+    const account = {
+        template: '#acc'
+    }
+
+    const router = new VueRouter({
+        routes: [
+            {
+                path: '/', redirect: '/account'
+            },
+            {
+                path: '/account', component: account, children: [
+                    {path: 'login', component: login},
+                    {path: 'register', component: register},
+                ]
+            },
+
+        ]
+    })
+
+    // viewmodel
+    const app = new Vue({
+        el: "#app",
+        //  model
+        data: {},
+        router
+    })
+
+</script>
+</body>
+</html>

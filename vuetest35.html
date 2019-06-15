@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--
+
+        组件父 -> 子 传值 及  子组件中data中的数据和props中的数据区别
+
+        关于子组件中data中的数据和props中的数据区别：
+        data是子组件自己的属性，可读可写， props中是父组件的属性，仅可读
+
+    -->
+    <!--view-->
+    <div id="app">
+        <!--父组件将msg通过属性绑定到message上，子组件通过在props数组中定义message同名数据项，接受父组件的消息，就可以在模板中使用了-->
+        <comp :message="msg"></comp>
+    </div>
+
+    <script>
+
+        // viewmodel
+        const app = new Vue({
+            el:"#app",
+            //  model
+            data:{
+                msg:'我是父组件的消息'
+            },
+            components:{
+                comp:{
+                    props:['message'],
+                    template:'<h1>我是子组件----{{message}}</h1>'
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

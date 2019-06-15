@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+
+<!-- 计算属性 &  侦听属性 -->
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <div id="demo">{{ fullName }}</div>
+
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            data: {
+                firstName: 'Foo',
+                lastName: 'Bar'
+            },
+            computed: {
+                fullName: function () {
+                    return this.firstName + ' ' + this.lastName
+                }
+            }
+        })
+    </script>
+
+</body>
+
+<!--
+     侦听属性，对已有的model属性进行侦听  在数据变化时执行异步或开销较大的操作时最合适
+     计算属性，通过已有的属性计算未列出的属性
+     方法， 用于排除 计算属性中的 属性缓存带来的影响
+-->
+
+
+
+</html>

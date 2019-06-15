@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--
+
+    ref获取dom元素和组件的引用:
+
+
+    可以通过this.$refs获取制定名称(ref) 的 dom节点,并获取数据和调用他们的方法
+
+-->
+<!--view-->
+<div id="app" @click="testRef">
+    <comp ref="mycomp"></comp>
+
+    <div ref = 'myh2'>
+        <h2>我是父组件的h2</h2>
+    </div>
+
+</div>
+
+
+<template id="tem">
+    <div>
+        <h3>我是子组件的h3</h3>
+    </div>
+</template>
+
+
+<!--<template id="dis">-->
+<!--    <li>{{item.user}}&#45;&#45;&#45;&#45;&#45;&#45;{{item.content}}</li>-->
+<!--</template>-->
+
+<script>
+
+    // viewmodel
+    const app = new Vue({
+
+        el: "#app",
+        //  model
+
+        components: {
+            comp: {
+                data() {
+                    return {
+                        msg: 'hellovv'
+                    }
+                },
+
+                template: '#tem',
+
+            },
+
+        },
+        methods:{
+            testRef(){
+                console.log(this.$refs.mycomp.msg);        //获取自定义组件的数据msg
+                console.log(this.$refs.myh2.innerText);   //获取普通dom节点的text值
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

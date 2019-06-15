@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <style>
+
+        #app input {
+            height: 30px;
+            width: 188px;
+            text-indent: 0.6em;
+        }
+
+    </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--
+
+
+  页面刷新时文本框直接获得焦点 ， 不用 .focus(), 采用 vue的指令实现
+
+-->
+
+
+<!--view-->
+<div id="app">
+    <label>
+        请输入你的问题：
+        <input type="text" value="" placeholder="Please input your question..." v-focus v-color="'blue'" v-changefont="'15'">
+    </label>
+</div>
+
+<script>
+
+    //自定义全局指令
+    Vue.directive('focus_global', {
+        bind(el) {
+            // 指令绑定到元素时
+        },
+        inserted(el) {
+            // 指令所在的dom节点渲染到页面上
+            el.focus()
+        },
+        update(el) {
+            // 指令所在的dom节点更新时
+        }
+
+    })
+
+    Vue.directive('color',{
+        bind(el,binding){
+            //binding对象里包含 指令名 ，指令值(=)， 指令后缀(.prevent)，指令参数(:)等属性
+            el.style.color = binding.value
+        }
+    })
+
+    // viewmodel
+    var app = new Vue({
+        el: "#app",
+        //  model
+        data: {},
+        //自定义私有指令
+        directives: {
+            focus: {
+                // bind, inserted, update等等都是事件钩子，类似还有 componentUpdated, unbind
+
+                bind(el) {
+                    // 指令绑定到元素时
+                },
+                inserted(el) {
+                    // 指令所在的dom节点渲染到页面上
+                    el.focus()
+                },
+                update(el) {
+                    // 节点更新时
+                }
+            },
+            //如果只想对钩子bind和update添加操作， 可简化为下列函数的形式,他的函数体对 bind钩子和update钩子起作用
+            changefont(el,binding){
+                el.style.fontSize = parseInt(binding.value)+'px'   //这里有个坑，指令需要全小写，不然会报错
+            }
+            // changefont: {
+            //     bind(el,binding){
+            //         el.style.fontSize = parseInt(binding.value)+'px'
+            //     }
+            // }
+
+
+        }
+    })
+
+
+</script>
+</body>
+</html>

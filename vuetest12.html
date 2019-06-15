@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 内联样式 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <style>
+        div{
+            height: 300px;
+            width:300px;
+            background-color:aquamarine;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h2 v-cloak>{{msg}}</h2>
+    <h3 v-text="msg"></h3>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!--    v-cloak解决网速慢的情况下插值表达式闪烁问题 -->
+<!--  插值表达式和v-text区别
+ 1. 关于网速慢闪烁
+ 2. v-text会替换原本标签对的内容，而插值表达式就像模板引擎，只会替换占位符
+ 3. v-html会输出html格式内容，而v-text只会原样输出
+
+ -->
+<script>
+    var vm = new Vue({
+        el:"#app",
+        //data 存放的是页面所有要用到的属性，相当于MVVM中的 model
+        data:{
+            msg:'Hello Vue'
+
+        }
+    })
+
+</script>
+
+</body>
+
+
+
+
+
+</html>

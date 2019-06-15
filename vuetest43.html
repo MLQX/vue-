@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue demo</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+<!--
+
+    前端的路由如何传参
+    使用组件的  this.$route.query 获取参数
+    this.$route格式：
+    {
+        fullname:'xxxx',
+        hash:'xxx',
+        matched:[xx],
+        meta:{xxx},
+        name:undefined,
+        params:{xxx},
+        path:'xx',
+        query:{xx},
+        _proto_:Object
+    }
+-->
+<!--view-->
+<div id="app">
+    <router-link to="/login?sessionId=11525252522521">登录</router-link>
+    <router-link to="/register">注册</router-link>
+
+    <router-view></router-view>
+</div>
+
+<script>
+
+
+    const login = {
+        template: '<h3>登录页面</h3>',
+        methods: {
+            getArgs() {
+                console.log(this.$route);
+            }
+        },
+        created(){
+            console.log(this.$route);
+        }
+    }
+    const register = {
+        template: '<h3>注册页面</h3>'
+    }
+
+    const router = new VueRouter({
+        routes: [
+            {
+                path: '/', redirect: '/login'
+            },
+            {
+                path: '/login', component: login
+            },
+            {
+                path: '/register', component: register
+            }
+        ]
+    })
+
+    // viewmodel
+    const app = new Vue({
+        el: "#app",
+        //  model
+        data: {},
+        router: router
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <style>
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.8s ease;
+        }
+    </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--
+
+    组件切换动画和组件切换mode项的配置
+
+-->
+
+<!--view-->
+<div id="app">
+    <a href="#" @click="compName='login'">登录页面</a>
+    <a href="#" @click="compName='register'">注册页面</a>
+    <hr>
+
+
+    <transition mode="out-in">
+        <!--使用官方的component标签切换组件-->
+        <component :is="compName"></component>
+    </transition>
+</div>
+
+
+<script>
+    Vue.component('login', {
+        template: '<h1>这是登录页面</h1>'
+    })
+    Vue.component('register', {
+        template: '<h1>这是注册页面</h1>'
+    })
+    // viewmodel
+    const app = new Vue({
+        el: "#app",
+        //  model
+        data: {
+            compName: 'login'
+
+        }
+    })
+
+</script>
+</body>
+</html>

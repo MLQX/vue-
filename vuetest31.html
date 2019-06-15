@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--
+
+        组件知识
+        前面都是全局组件
+        下面创建的是私有组件
+
+    -->
+    <!--view-->
+    <div id="app">
+        <mycomp1></mycomp1>
+    </div>
+
+    <div id="app2">
+        <!--此时app2无法访问app1中定义的mycomp1组件，这就实现了组件的私有-->
+        <!--<mycomp1></mycomp1>           -->
+    </div>
+
+
+
+
+    <!--创建自定义template，可以有高亮和智能提示-->
+    <template id="mytemp">
+        <div>
+            <h1>这种方法有智能提示</h1>
+            <h4>真的好棒啊，写起来不容易错了</h4>
+        </div>
+    </template>
+
+    <script>
+
+        //这里注意，template应该是一个根元素，不能类似  <h3></h3><span></span> 但是可以 <h3><span></span></h3>，此时的h3为template根元素
+        Vue.component('myComp1',{
+            template:'#mytemp'
+        });
+
+        // viewmodel
+        const app = new Vue({
+            el:"#app",
+            //  model
+            data:{
+
+            },
+            components:{
+                mycomp1:{
+                    template:'#mytemp'
+                }
+            }
+        })
+
+
+
+        const app2 = new Vue({
+            el:"#app2",
+            data:{
+
+            }
+        })
+    </script>
+</body>
+</html>
